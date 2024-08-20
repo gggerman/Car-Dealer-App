@@ -1,4 +1,4 @@
-"use client"; // Marca este archivo como un componente de cliente
+"use client";
 
 import { useRouter } from "next/navigation";
 
