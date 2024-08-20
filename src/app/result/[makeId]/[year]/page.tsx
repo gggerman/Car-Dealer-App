@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import BackButton from "./backButton";
 
-// Definir la función para obtener los datos
 const fetchVehicleModels = async (makeId: string, year: string) => {
   const res = await fetch(
     `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/${makeId}/modelyear/${year}?format=json`,
@@ -14,7 +13,6 @@ const fetchVehicleModels = async (makeId: string, year: string) => {
   return data.Results;
 };
 
-// Componente para renderizar los modelos de vehículos
 const VehicleModels = async ({
   params,
 }: {
@@ -47,7 +45,6 @@ const VehicleModels = async ({
   }
 };
 
-// Función para obtener marcas de vehículos desde la API
 const fetchVehicleMakes = async () => {
   const res = await fetch(
     "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json",
@@ -56,10 +53,9 @@ const fetchVehicleMakes = async () => {
     throw new Error("Failed to fetch vehicle makes");
   }
   const data = await res.json();
-  return data.Results.map((make: any) => make.Make_Id); // Ajusta si es necesario
+  return data.Results.map((make: any) => make.Make_Id);
 };
 
-// Función para generar parámetros estáticos
 export async function generateStaticParams() {
   const makes = await fetchVehicleMakes();
   const years = Array.from(
@@ -67,7 +63,6 @@ export async function generateStaticParams() {
     (_, i) => (2015 + i).toString(),
   );
 
-  // Genera las combinaciones de `makeId` y `year`
   const paths = makes.flatMap((makeId: string) =>
     years.map((year) => ({
       makeId: makeId,
